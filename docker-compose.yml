@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  elasticsearch:
+    container_name: elasticsearch-seb
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.12.1
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "logger.level=warn"
+    mem_limit: 2g
+
+  kibana:
+    container_name: kibana-seb
+    image: kibana:7.12.1
+    ports:
+      - "5601:5601"
+    environment:
+      - ELASTICSEARCH_URL="http://elasticsearch:9200"
+      - "logging.root.level=warn"
+    mem_limit: 512m
+    depends_on:
+      - elasticsearch
+
+  setup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - elasticsearch

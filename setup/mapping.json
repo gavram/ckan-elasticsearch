@@ -1,0 +1,224 @@
+{
+  "settings": {
+    "analysis": {
+      "tokenizer": {
+        "ngram_tokenizer": {
+          "type": "ngram",
+          "min_gram": 2,
+          "max_gram": 10
+        },
+        "whitespace_tokenizer": {
+          "type": "whitespace"
+        }
+      },
+      "filter": {
+        "ckan_english_stop": {
+          "type": "stop",
+          "stopwords": "_english_"
+        },
+        "ckan_english_stemmer": {
+          "type": "stemmer",
+          "language": "english"
+        },
+        "ckan_english_possessive_stemmer": {
+          "type": "stemmer",
+          "language": "possessive_english"
+        },
+        "ckan_word_delimiter": {
+          "type": "word_delimiter_graph",
+          "generate_word_parts": true,
+          "generate_number_parts": true,
+          "catenate_words": true,
+          "catenate_numbers": true,
+          "catenate_all": false,
+          "split_on_case_change": true
+        },
+        "ckan_asciifolding": {
+          "type": "asciifolding",
+          "preserve_original": true
+        },
+        "lowercase": {
+          "type": "lowercase"
+        }
+      },
+      "analyzer": {
+        "ckan_ngram_analyzer": {
+          "type": "custom",
+          "tokenizer": "ngram_tokenizer",
+          "filter": [
+            "lowercase"
+          ]
+        },
+        "ckan_index_analyzer": {
+          "type": "custom",
+          "tokenizer": "whitespace_tokenizer",
+          "filter": [
+            "lowercase",
+            "ckan_english_stemmer",
+            "ckan_english_possessive_stemmer",
+            "ckan_asciifolding"
+          ]
+        },
+        "ckan_query_analyzer": {
+          "type": "custom",
+          "tokenizer": "whitespace_tokenizer",
+          "filter": [
+            "lowercase",
+            "ckan_english_stemmer",
+            "ckan_english_possessive_stemmer",
+            "ckan_asciifolding"
+          ]
+        },
+        "ckan_text_general_index_analyzer": {
+          "type": "custom",
+          "tokenizer": "whitespace_tokenizer",
+          "filter": [
+            "lowercase"
+          ]
+        },
+        "ckan_text_general_query_analyzer": {
+          "type": "custom",
+          "tokenizer": "whitespace_tokenizer",
+          "filter": [
+            "lowercase"
+          ]
+        }
+      }
+    },
+    "index": {
+      "max_ngram_diff": 8
+    }
+  },
+  "mappings": {
+    "properties": {
+      "index_id": {
+        "type": "keyword"
+      },
+      "id": {
+        "type": "keyword"
+      },
+      "site_id": {
+        "type": "keyword"
+      },
+      "title": {
+        "type": "text",
+        "analyzer": "ckan_index_analyzer",
+        "search_analyzer": "ckan_query_analyzer"
+      },
+      "title_ngram": {
+        "type": "text",
+        "analyzer": "ckan_ngram_analyzer"
+      },
+      "entity_type": {
+        "type": "keyword"
+      },
+      "dataset_type": {
+        "type": "keyword"
+      },
+      "state": {
+        "type": "keyword"
+      },
+      "name": {
+        "type": "keyword"
+      },
+      "name_ngram": {
+        "type": "text",
+        "analyzer": "ckan_ngram_analyzer"
+      },
+      "revision_id": {
+        "type": "keyword"
+      },
+      "version": {
+        "type": "keyword"
+      },
+      "url": {
+        "type": "keyword"
+      },
+      "ckan_url": {
+        "type": "keyword"
+      },
+      "download_url": {
+        "type": "keyword"
+      },
+      "notes": {
+        "type": "text",
+        "analyzer": "ckan_text_general_index_analyzer",
+        "search_analyzer": "ckan_text_general_query_analyzer"
+      },
+      "author": {
+        "type": "text",
+        "analyzer": "ckan_text_general_index_analyzer",
+        "search_analyzer": "ckan_text_general_query_analyzer"
+      },
+      "author_email": {
+        "type": "text",
+        "analyzer": "ckan_text_general_index_analyzer",
+        "search_analyzer": "ckan_text_general_query_analyzer"
+      },
+      "maintainer": {
+        "type": "text",
+        "analyzer": "ckan_text_general_index_analyzer",
+        "search_analyzer": "ckan_text_general_query_analyzer"
+      },
+      "maintainer_email": {
+        "type": "text",
+        "analyzer": "ckan_text_general_index_analyzer",
+        "search_analyzer": "ckan_text_general_query_analyzer"
+      },
+      "license": {
+        "type": "keyword"
+      },
+      "license_id": {
+        "type": "keyword"
+      },
+      "tags": {
+        "type": "keyword",
+        "norms": false,
+        "index": true,
+        "store": true
+      },
+      "groups": {
+        "type": "keyword"
+      },
+      "organization": {
+        "type": "keyword"
+      },
+      "capacity": {
+        "type": "keyword"
+      },
+      "permission_labels": {
+        "type": "keyword",
+        "index": true,
+        "store": false
+      },
+      "res_name": {
+        "type": "text",
+        "analyzer": "ckan_text_general_index_analyzer",
+        "search_analyzer": "ckan_text_general_query_analyzer"
+      },
+      "res_description": {
+        "type": "text",
+        "analyzer": "ckan_text_general_index_analyzer",
+        "search_analyzer": "ckan_text_general_query_analyzer"
+      },
+      "res_format": {
+        "type": "keyword"
+      },
+      "res_url": {
+        "type": "keyword"
+      },
+      "res_type": {
+        "type": "keyword"
+      },
+      "metadata_created": {
+        "type": "date"
+      },
+      "metadata_modified": {
+        "type": "date"
+      },
+      "indexed_ts": {
+        "type": "date"
+      }
+    }
+  }
+}
